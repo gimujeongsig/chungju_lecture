@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -26,6 +23,10 @@ class _HomePageState extends State<HomePage> {
             ElevatedButton(
                 onPressed: () => Navigator.pushNamed(context, "/todo-remote"),
                 child: const Text("클라우드 TO-DO")
+            ),
+            ElevatedButton(
+                onPressed: () => Navigator.pushNamed(context, "/login"),
+                child: const Text("로그인")
             )
           ],
         ),
