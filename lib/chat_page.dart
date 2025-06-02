@@ -76,20 +76,33 @@ class _ChatPageState extends State<ChatPage> {
                     final email = msg['email'] ?? "" ;
                     final isMine = msg['user_id'] == userId;
                     final senderText = isMine ? "나" : email;
-
+                    final createdAt = DateTime.tryParse(msg["created_at"] ?? "") ?? DateTime.now();
+                    final timeString = "${createdAt.hour.toString().padLeft(2, "0")}:${createdAt.minute.toString().padLeft(2, '0')}";
 
                     return ListTile(
                       title: Text(
                           msg['content'] ?? '',
                           textAlign: isMine ? TextAlign.end : TextAlign.start
                       ),
-                      subtitle: Text(
-                        senderText,
-                        textAlign: isMine? TextAlign.end : TextAlign.start,
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey[600]
-                        ),
+                      subtitle: Column(
+                          crossAxisAlignment: isMine? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              senderText,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[600]
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              timeString,
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.grey[500]
+                              ),
+                            )
+                          ],
                       ), // 누가 보냈는지
                     );
                   }
