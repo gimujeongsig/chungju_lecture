@@ -85,24 +85,24 @@ class _ChatPageState extends State<ChatPage> {
                           textAlign: isMine ? TextAlign.end : TextAlign.start
                       ),
                       subtitle: Column(
-                          crossAxisAlignment: isMine? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              senderText,
-                              style: TextStyle(
+                        crossAxisAlignment: isMine? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            senderText,
+                            style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey[600]
-                              ),
                             ),
-                            const SizedBox(height: 4),
-                            Text(
-                              timeString,
-                              style: TextStyle(
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            timeString,
+                            style: TextStyle(
                                 fontSize: 10,
                                 color: Colors.grey[500]
-                              ),
-                            )
-                          ],
+                            ),
+                          )
+                        ],
                       ), // 누가 보냈는지
                     );
                   }
