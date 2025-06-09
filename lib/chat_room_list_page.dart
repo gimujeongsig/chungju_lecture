@@ -78,23 +78,32 @@ class _ChatRoomListPageState extends State<ChatRoomListPage> {
               child: _rooms.isEmpty
                   ? const Center(child: Text("채팅방이 없습니다."))
                   : ListView.builder(
-                        itemCount: _rooms.length,
+                itemCount: _rooms.length,
                 itemBuilder: (context, index){
                   final room = _rooms[index];
-                  return ListTile(
-                    leading: const Icon(Icons.chat_bubble_outline),
-                    title: Text(room['name'] ?? '이름 없음'),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => ChatPage(
-                                  roomId : room['id'],
-                                  roomName : room['name']
+                  final createdAt = DateTime.tryParse(room["created_at"] ?? "") ?? DateTime.now();
+                  final timeString = "${createdAt.hour.toString().padLeft(2, '0')}:${createdAt.minute.toString().padLeft(2, '0')}";
+
+                  return Card(
+                    elevation: 2,
+                    margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    child: ListTile(
+                        leading: const Icon(Icons.chat_bubble_outline),
+                        title: Text(room['name'] ?? '이름 없음'),
+                        subtitle: timeString.isNotEmpty ? Text("생성 시간: ${timeString}") : null,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                      ChatPage(
+                                          roomId: room['id'],
+                                          roomName: room['name']
+                                      )
                               )
-                          )
-                      );
-                    },
+                          );
+                        }
+                    ),
                   );
                 },
               )

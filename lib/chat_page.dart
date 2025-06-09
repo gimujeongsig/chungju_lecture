@@ -45,9 +45,12 @@ class _ChatPageState extends State<ChatPage> {
         schema: 'public',
         table: 'messages',
         callback: (payload) {
-          setState(() {
-            _messages.insert(0, payload.newRecord);
-          });
+          final msg = payload.newRecord;
+          if (msg['rood_id'] == widget.roomId) {
+            setState(() {
+              _messages.insert(0, msg);
+            });
+          }
         }
     ).subscribe();
   }
@@ -69,7 +72,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("채팅")),
+      appBar: AppBar(title: Text( widget.roomName)),
       body: Column(
           children: [
             Expanded(
