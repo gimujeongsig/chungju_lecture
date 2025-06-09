@@ -24,12 +24,27 @@ class _ChatRoomListPageState extends State<ChatRoomListPage> {
   }
 
   Future<void> _loadRooms() async {
-    final data = await supabase
+    final roomsData = await supabase
         .from('rooms')
         .select()
         .order('created_at', ascending: false);
+
+    final List<Map<String, dynamic>> result = [];
+
+    // view 로 다시만들거나, 백엔드 api를 만들면 sql 조인하는걸 해야 효율적
+    for (final room in roomsData) {
+      final messages = await supabase
+                        .from("messages")
+                        .select()
+                        .eq('room_id', room['id'])
+                        .order('create_at', ascending: false)
+                        .limit(1);
+      room['last_message'] = messages.isNotEmpty ? messages.first['content'] ?? "" : "";
+      result.add(room);
+    }
+
     setState(() {
-      _rooms = List<Map<String, dynamic>>.from(data);
+      _rooms = result;
     });
   }
 
